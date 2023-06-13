@@ -584,7 +584,7 @@ class LWC(SeriesCommon):
               }}
           }})''')
 
-    def legend(self, visible: bool = False, ohlc: bool = True, percent: bool = True, color: str = None,
+    def legend(self, visible: bool = False, ohlc: bool = True, percent: bool = True, absolute: bool = False, color: str = None,
                font_size: int = None, font_family: str = None):
         """
         Configures the legend of the chart.
@@ -605,9 +605,12 @@ class LWC(SeriesCommon):
                                 | C ${{legendItemFormat(data.close)}} `
                     let percentMove = ((data.close-data.open)/data.open)*100
                     let percent = `| ${{percentMove >= 0 ? '+' : ''}}${{percentMove.toFixed(2)}} %`
+                    let absoluteGain = (data.close-data.open)
+                    let absolute = `| ${{absoluteGain >= 0 ? '+' : ''}}${{absoluteGain.toFixed(2)}}`
                     let finalString = ''
                     {'finalString += ohlc' if ohlc else ''}
                     {'finalString += percent' if percent else ''}
+                    {'finalString += absolute' if absolute else ''}
                     {self.id}.legend.innerHTML = finalString
                 }}
                 else {{
